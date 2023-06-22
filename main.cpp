@@ -1,7 +1,10 @@
 #include <iostream>
 #include <ctime>
 #include <algorithm>
-#include <map>
+#include <vector>
+#include <string>
+#include <cassert>
+#include <set>
 
 template <typename T>
 class List
@@ -14,7 +17,7 @@ public:
 		Node* _next;
 		~Node()
 		{
-			std::cout << "Node " << _data << " deleted.\n";
+			//std::cout << "Node " << _data << " deleted.\n";
 		}
 
 		T GetData()
@@ -22,9 +25,14 @@ public:
 			return _data;
 		}
 
-		void SetData(const T& data)
+		T& Data()
 		{
-			_data = data;
+			return _data;
+		}
+
+		T* DataForSet()
+		{
+			return &_data;
 		}
 
 		void ShowNode()
@@ -37,7 +45,14 @@ public:
 		T _data;
 	};
 
+	List() : _head(nullptr), _size(0) {}
 
+	List(const List& other) : _head(nullptr), _size(0) {
+		for (auto cur = other._head; cur != nullptr; cur = cur->_next)
+		{
+			this->PushBack(cur->GetData());
+		}
+	}
 
 	void PushBack(const T& data)
 	{
@@ -91,6 +106,24 @@ public:
 	size_t GetSize()
 	{
 		return _size;
+	}
+
+	size_t GetCollectionSize()
+	{
+		size_t fullSize = 0;
+		for (auto cur = this->_head; cur != nullptr; cur = cur->_next)
+		{
+			for (size_t i = 0; i < cur->Data().size(); ++i)
+			{
+				fullSize++;
+			}
+		}
+		return fullSize;
+	}
+
+	size_t GetFullSize()
+	{
+		return _size + GetCollectionSize();
 	}
 
 	void PushFront(const T& data)
@@ -251,6 +284,42 @@ public:
 		delete[] arr;
 	}
 
+	List& operator+(const List& l) 
+	{
+		for (auto cur = l._head; cur != nullptr; cur = cur->_next)
+		{
+			this->PushBack(cur->GetData());
+		}
+		return *this;
+	}
+
+	List& operator=(const List& l)
+	{
+		for (auto cur = l._head; cur != nullptr; cur = cur->_next)
+		{
+			this->PushBack(cur->GetData());
+		}
+		return *this;
+	}
+
+	T& operator[](int index)
+	{
+		if (index < 0 || index >= this->_size)
+		{
+			exit(1);
+		}
+		auto cur = this->_head;
+		for (size_t i = 0; i < _size; ++i)
+		{
+			if (i == index)
+			{
+				return cur->Data();
+			}
+			cur = cur->_next;
+		}
+		//return this->_head->Data();
+	}
+
 	~List()
 	{
 		auto cur = _head;
@@ -264,8 +333,8 @@ public:
 	}
 
 private:
-	Node* _head = nullptr;
-	size_t _size = 0;
+	Node* _head;
+	size_t _size;
 
 };
 
@@ -274,15 +343,117 @@ private:
 
 int main()
 {
+	system("chcp 1251");
 	srand(time(NULL));
 	List<int> list;
+	List<int> list1;
+	int number = 0;
 	for (size_t i = 0; i < 10; i++)
 	{
-		list.PushBack(rand() % 100);
+		if (i == 9)
+		{
+			number = rand() % 100;
+			list.PushBack(number);
+		}
+		else list.PushBack(rand() % 100);
 	}
+	list.ShowList();
+	std::cout << list[9] << std::endl;
+	assert(number == list[9]);						// проверка оператора перегрузки []
 	std::cout << "Number of elements - " << list.GetSize() << std::endl;
-	list.ShowList();
-	list.Sort();
-	list.ShowList();
+	int number1 = 0;
+	for (size_t i = 0; i < 5; i++)
+	{
+		if (i == 4)
+		{
+			number1 = rand() % 100;
+			list.PushBack(number1);
+		}
+		else list.PushBack(rand() % 100);
+	}
+	list1.ShowList();
+	std::cout << "Number of elements - " << list1.GetSize() << std::endl;
+	List<int> list2;
+	list2 = list + list1;
+	list2.ShowList();
+	std::cout << "Number of elements - " << list2.GetSize() << std::endl;
+	// проверка правильности работы перегрузки оператора "+" списков
+	assert(list2.GetSize() == 15);			// проверка длины итогового списка
+	std::cout << "number = " << number << std::endl;
+	std::cout << "list2[9] = " << list2[9] << std::endl;
+	std::cout << "number1 = " << number1 << std::endl;
+	std::cout << "list2[14] = " << list2[14] << std::endl;
+	assert(number == list2[9]);				// проверка наличия элемента под индексом 9
+	assert(number1 == list2[14]);			// проверка наличия элемента под индексом 14
+	
+	// Создано два списка для векторов и для строк. Метод GetCollectionSize() для 
+	// этих коллекций работают т.к. эти коллекции имеют метод size()
+
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+	
+	List<std::vector<int>> listOfVectors;				// создание списка целочисленных векторов
+	for (int i = 0; i < 5; i++)							
+	{
+		std::vector<int> vec;
+		listOfVectors.PushBack(vec);					// вставка нового вектора в список
+		for (int j = 0; j < 3; j++)
+		{
+			listOfVectors[i].push_back(rand() % 100);	// заполнение вставленного вектора
+		}
+	}
+
+	for (int i = 0; i < listOfVectors.GetSize(); i++)		// вывод на экран содержимого списка целочисленных векторов
+	{
+		for (int j = 0; j < listOfVectors[i].size(); j++)
+		{
+			std::cout << listOfVectors[i].at(j) << ' ';
+		}
+		std::cout << std::endl;
+	}
+	std::cout << listOfVectors.GetFullSize() << std::endl;	// вывод размера списка с учётом содержимого векторов
+	assert(listOfVectors.GetFullSize() == listOfVectors.GetCollectionSize() + listOfVectors.GetSize());				// проверка правильности работы метода GetFullSize()
+	
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+	List<std::string> listOfStrings;						// создание списка объектов string
+	for (int i = 0; i < 5; i++)
+	{
+		std::string str;
+		std::cout << "Введите строку: ";
+		std::getline(std::cin, str);
+		listOfStrings.PushBack(str);						// добавление нового объекта string в список
+	}
+	std::cout << listOfStrings.GetFullSize() << std::endl;
+	assert(listOfStrings.GetFullSize() == listOfStrings.GetCollectionSize() + listOfStrings.GetSize());
+	listOfStrings.ShowList();
+
+	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+	List<std::set<int>> listOfSet;
+	for (int i = 0; i < 5; i++)
+	{
+		std::set<int> s;
+		listOfSet.PushBack(s);
+		for (int j = 0; j < 3; j++)
+		{
+			listOfSet[i].insert(rand() % 100);	// заполнение вставленной коллекции
+		}
+	}
+	
+
+	// НЕ ПОЛУЧИЛОСЬ ВЫВЕСТИ НА ПЕЧАТЬ СОДЕРЖИМОЕ SET ЧЕРЕЗ ИТЕРАТОРЫ!
+
+	for (int i = 0; i < listOfSet.GetSize(); i++)		// вывод на экран содержимого списка целочисленных векторов
+	{
+		for (auto it = listOfSet[i].begin(); it != listOfSet[i].end(); ++it)
+		{
+			std::cout << *it << ' ';
+		}
+		std::cout << std::endl;
+	}
+	
+	std::cout << listOfSet.GetFullSize() << std::endl;
+	assert(listOfSet.GetFullSize() == listOfSet.GetCollectionSize() + listOfSet.GetSize());
+
 	return 0;
 }
