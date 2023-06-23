@@ -284,13 +284,18 @@ public:
 		delete[] arr;
 	}
 
-	List& operator+(const List& l) 
+	List operator+(const List& l) 
 	{
+		List<T> newList;
+		for (auto cur = this->_head; cur != nullptr; cur = cur->_next)
+		{
+			newList.PushBack(cur->GetData());
+		}
 		for (auto cur = l._head; cur != nullptr; cur = cur->_next)
 		{
-			this->PushBack(cur->GetData());
+			newList.PushBack(cur->GetData());
 		}
-		return *this;
+		return newList;
 	}
 
 	List& operator=(const List& l)
@@ -367,9 +372,9 @@ int main()
 		if (i == 4)
 		{
 			number1 = rand() % 100;
-			list.PushBack(number1);
+			list1.PushBack(number1);
 		}
-		else list.PushBack(rand() % 100);
+		else list1.PushBack(rand() % 100);
 	}
 	list1.ShowList();
 	std::cout << "Number of elements - " << list1.GetSize() << std::endl;
@@ -386,7 +391,7 @@ int main()
 	assert(number == list2[9]);				// проверка наличия элемента под индексом 9
 	assert(number1 == list2[14]);			// проверка наличия элемента под индексом 14
 	
-	// Создано два списка для векторов и для строк. Метод GetCollectionSize() для 
+	// Создано три списка для векторов, строк и коллекции set. Метод GetCollectionSize() для 
 	// этих коллекций работают т.к. эти коллекции имеют метод size()
 
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -441,9 +446,7 @@ int main()
 	}
 	
 
-	// НЕ ПОЛУЧИЛОСЬ ВЫВЕСТИ НА ПЕЧАТЬ СОДЕРЖИМОЕ SET ЧЕРЕЗ ИТЕРАТОРЫ!
-
-	for (int i = 0; i < listOfSet.GetSize(); i++)		// вывод на экран содержимого списка целочисленных векторов
+	for (int i = 0; i < listOfSet.GetSize(); i++)		// вывод на экран содержимого списка коллекций set
 	{
 		for (auto it = listOfSet[i].begin(); it != listOfSet[i].end(); ++it)
 		{
