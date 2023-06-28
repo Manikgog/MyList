@@ -1,4 +1,4 @@
-#include <iostream>
+п»ї#include <iostream>
 #include <ctime>
 #include <algorithm>
 #include <vector>
@@ -364,7 +364,7 @@ int main()
 	}
 	list.ShowList();
 	std::cout << list[9] << std::endl;
-	assert(number == list[9]);						// проверка оператора перегрузки []
+	assert(number == list[9]);						// РїСЂРѕРІРµСЂРєР° РѕРїРµСЂР°С‚РѕСЂР° РїРµСЂРµРіСЂСѓР·РєРё []
 	std::cout << "Number of elements - " << list.GetSize() << std::endl;
 	int number1 = 0;
 	for (size_t i = 0; i < 5; i++)
@@ -382,32 +382,32 @@ int main()
 	list2 = list + list1;
 	list2.ShowList();
 	std::cout << "Number of elements - " << list2.GetSize() << std::endl;
-	// проверка правильности работы перегрузки оператора "+" списков
-	assert(list2.GetSize() == 15);			// проверка длины итогового списка
+	// РїСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚Рё СЂР°Р±РѕС‚С‹ РїРµСЂРµРіСЂСѓР·РєРё РѕРїРµСЂР°С‚РѕСЂР° "+" СЃРїРёСЃРєРѕРІ
+	assert(list2.GetSize() == 15);			// РїСЂРѕРІРµСЂРєР° РґР»РёРЅС‹ РёС‚РѕРіРѕРІРѕРіРѕ СЃРїРёСЃРєР°
 	std::cout << "number = " << number << std::endl;
 	std::cout << "list2[9] = " << list2[9] << std::endl;
 	std::cout << "number1 = " << number1 << std::endl;
 	std::cout << "list2[14] = " << list2[14] << std::endl;
-	assert(number == list2[9]);				// проверка наличия элемента под индексом 9
-	assert(number1 == list2[14]);			// проверка наличия элемента под индексом 14
+	assert(number == list2[9]);				// РїСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ СЌР»РµРјРµРЅС‚Р° РїРѕРґ РёРЅРґРµРєСЃРѕРј 9
+	assert(number1 == list2[14]);			// РїСЂРѕРІРµСЂРєР° РЅР°Р»РёС‡РёСЏ СЌР»РµРјРµРЅС‚Р° РїРѕРґ РёРЅРґРµРєСЃРѕРј 14
 	
-	// Создано три списка для векторов, строк и коллекции set. Метод GetCollectionSize() для 
-	// этих коллекций работают т.к. эти коллекции имеют метод size()
+	// РЎРѕР·РґР°РЅРѕ С‚СЂРё СЃРїРёСЃРєР° РґР»СЏ РІРµРєС‚РѕСЂРѕРІ, СЃС‚СЂРѕРє Рё РєРѕР»Р»РµРєС†РёРё set. РњРµС‚РѕРґ GetCollectionSize() РґР»СЏ 
+	// СЌС‚РёС… РєРѕР»Р»РµРєС†РёР№ СЂР°Р±РѕС‚Р°СЋС‚ С‚.Рє. СЌС‚Рё РєРѕР»Р»РµРєС†РёРё РёРјРµСЋС‚ РјРµС‚РѕРґ size()
 
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 	
-	List<std::vector<int>> listOfVectors;				// создание списка целочисленных векторов
+	List<std::vector<int>> listOfVectors;				// СЃРѕР·РґР°РЅРёРµ СЃРїРёСЃРєР° С†РµР»РѕС‡РёСЃР»РµРЅРЅС‹С… РІРµРєС‚РѕСЂРѕРІ
 	for (int i = 0; i < 5; i++)							
 	{
 		std::vector<int> vec;
-		listOfVectors.PushBack(vec);					// вставка нового вектора в список
+		listOfVectors.PushBack(vec);					// РІСЃС‚Р°РІРєР° РЅРѕРІРѕРіРѕ РІРµРєС‚РѕСЂР° РІ СЃРїРёСЃРѕРє
 		for (int j = 0; j < 3; j++)
 		{
-			listOfVectors[i].push_back(rand() % 100);	// заполнение вставленного вектора
+			listOfVectors[i].push_back(rand() % 100);	// Р·Р°РїРѕР»РЅРµРЅРёРµ РІСЃС‚Р°РІР»РµРЅРЅРѕРіРѕ РІРµРєС‚РѕСЂР°
 		}
 	}
 
-	for (int i = 0; i < listOfVectors.GetSize(); i++)		// вывод на экран содержимого списка целочисленных векторов
+	for (int i = 0; i < listOfVectors.GetSize(); i++)		// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ СЃРїРёСЃРєР° С†РµР»РѕС‡РёСЃР»РµРЅРЅС‹С… РІРµРєС‚РѕСЂРѕРІ
 	{
 		for (int j = 0; j < listOfVectors[i].size(); j++)
 		{
@@ -415,18 +415,18 @@ int main()
 		}
 		std::cout << std::endl;
 	}
-	std::cout << listOfVectors.GetFullSize() << std::endl;	// вывод размера списка с учётом содержимого векторов
-	assert(listOfVectors.GetFullSize() == listOfVectors.GetCollectionSize() + listOfVectors.GetSize());				// проверка правильности работы метода GetFullSize()
+	std::cout << listOfVectors.GetFullSize() << std::endl;	// РІС‹РІРѕРґ СЂР°Р·РјРµСЂР° СЃРїРёСЃРєР° СЃ СѓС‡С‘С‚РѕРј СЃРѕРґРµСЂР¶РёРјРѕРіРѕ РІРµРєС‚РѕСЂРѕРІ
+	assert(listOfVectors.GetFullSize() == listOfVectors.GetCollectionSize() + listOfVectors.GetSize());				// РїСЂРѕРІРµСЂРєР° РїСЂР°РІРёР»СЊРЅРѕСЃС‚Рё СЂР°Р±РѕС‚С‹ РјРµС‚РѕРґР° GetFullSize()
 	
 	//::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-	List<std::string> listOfStrings;						// создание списка объектов string
+	List<std::string> listOfStrings;						// СЃРѕР·РґР°РЅРёРµ СЃРїРёСЃРєР° РѕР±СЉРµРєС‚РѕРІ string
 	for (int i = 0; i < 5; i++)
 	{
 		std::string str;
-		std::cout << "Введите строку: ";
+		std::cout << "Р’РІРµРґРёС‚Рµ СЃС‚СЂРѕРєСѓ: ";
 		std::getline(std::cin, str);
-		listOfStrings.PushBack(str);						// добавление нового объекта string в список
+		listOfStrings.PushBack(str);						// РґРѕР±Р°РІР»РµРЅРёРµ РЅРѕРІРѕРіРѕ РѕР±СЉРµРєС‚Р° string РІ СЃРїРёСЃРѕРє
 	}
 	std::cout << listOfStrings.GetFullSize() << std::endl;
 	assert(listOfStrings.GetFullSize() == listOfStrings.GetCollectionSize() + listOfStrings.GetSize());
@@ -441,12 +441,12 @@ int main()
 		listOfSet.PushBack(s);
 		for (int j = 0; j < 3; j++)
 		{
-			listOfSet[i].insert(rand() % 100);	// заполнение вставленной коллекции
+			listOfSet[i].insert(rand() % 100);	// Р·Р°РїРѕР»РЅРµРЅРёРµ РІСЃС‚Р°РІР»РµРЅРЅРѕР№ РєРѕР»Р»РµРєС†РёРё
 		}
 	}
 	
 
-	for (int i = 0; i < listOfSet.GetSize(); i++)		// вывод на экран содержимого списка коллекций set
+	for (int i = 0; i < listOfSet.GetSize(); i++)		// РІС‹РІРѕРґ РЅР° СЌРєСЂР°РЅ СЃРѕРґРµСЂР¶РёРјРѕРіРѕ СЃРїРёСЃРєР° РєРѕР»Р»РµРєС†РёР№ set
 	{
 		for (auto it = listOfSet[i].begin(); it != listOfSet[i].end(); ++it)
 		{
